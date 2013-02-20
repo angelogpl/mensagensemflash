@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link rel="shortcut icon" href="https://www.facebook.com/favicon.ico"> 
+	<script type="text/javascript" src="jquery.js"></script>
+	<title>Poste sua anima&ccedil;&atilde;o</title>
+<style type="text/css">
+body
+{
+	font-family:"Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+    font-weight:bold;
+	background-color:white;
+	margin-top:0;
+	margin-left:0;
+	margin-rigth:0;
+	margin-bottom:0;
+	width:100%;
+	min-height:80%;
+	white-space: nowrap; 
+	line-height:70%;
+}
+
+html 
+{
+   overflow-x: hidden;
+}
+
+textarea 
+{ 
+	width:97.5%; 
+	height:12px; 
+	resize:none;
+	overflow:auto; 
+	overflow-y:hidden; 
+	overflow-x:hidden;
+    border:3px solid #cccccc;
+    font-family:"Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+    font-size:55%;
+    font-weight:bold;
+}
+	
+/* Facebook Tab Style */  
+.fbtab  
+{  
+	font-family:"Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+	font-size:90%;
+    font-weight:bold;
+    padding:8px;  
+    background-color:#d8dfea;  
+    color:#3b5998;  
+    font-weight:bold;  
+    float:center;  
+    margin-right:4px;  
+    text-decoration:none; 
+	text-align:center;
+} 
+ 
+.fbtab:hover  
+{  
+    background-color: #3b5998;  
+    color: #ffffff;  
+    cursor: hand;  
+}  
+
+div#voltar
+{
+	background-color:#eceff6;  
+    	border:1px solid #d4dae8;  
+    	color:#333333; 
+}
+
+div.sortitem
+{
+	background-color:#eceff6;  
+    border:1px solid #d4dae8;  
+    color:#333333;  
+    padding:0px;
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:0px;
+	padding-bottom:0px;
+    font-size: 13px;  
+    font-weight: bold;  
+}
+
+.fbinfobox  
+{  
+    background-color: #fff9d7;  
+    border: 1px solid #e2c822;  
+    color: #333333;  
+    padding: 10px;  
+    font-size: 80%;  
+    font-weight: bold;  
+}  
+</style>
+<body>
+<div id="fb-root"></div>
+<script>	
+
+	var APP_ID="298567523544903";
+	
+	window.fbAsyncInit = initFacebook;
+	
+	
+	function initFacebook()
+	{
+	
+		FB.init({
+		  appId  : APP_ID,
+		  status : true, // check login status
+		  cookie : false, // enable cookies to allow the server to access the session
+		  xfbml  : true  // parse XFBML
+		});
+		
+	};
+
+	(function() {
+		var e = document.createElement('script');
+		e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+		e.async = true;
+		document.getElementById('fb-root').appendChild(e);
+		}());
+
+		
+	function postToWallUsingFBUiAndAttachment()
+	{	
+	
+	  FB.ui(
+	  
+	  {
+	  method: "stream.publish",
+	  display: "iframe",
+	  user_message_prompt: "Poste sua animação!",
+	 
+	  attachment: {
+        name: document.getElementById("swfurl").value.match(/[^\/\\]+$/)+'',
+        description: "Mensagens em Flash",	  
+  
+        media:[{"type":"flash","swfsrc": document.getElementById("swfurl").value+'',"imgsrc": document.getElementById("imgurl").value+'',"width": "480","height": "640", "expanded_width": "640", "expanded_height": "480"}],      
+	  
+	  }
+	
+	 });
+
+	}
+	
+	
+	function sendAttachment() 
+	{
+
+	FB.ui(
+
+        {		
+            method: "stream.publish",
+            to: document.getElementById("friendid").value+'',
+
+            attachment: {
+			name: document.getElementById("swfurl").value.match(/[^\/\\]+$/)+'',
+			description: "Mensagens em Flash",	  
+  
+			media:[{"type":"flash","swfsrc": document.getElementById("swfurl").value+'', "width": "640", "height": "480", "expanded_width": "640", "expanded_height": "480", "imgsrc": document.getElementById("imgurl").value+''}],      
+	  
+		}
+	 
+	 });
+
+    }
+	
+	function openfriendslist()
+	
+	{
+		var popup;
+
+		popup = window.open("http://dl.dropbox.com/u/71464466/facebookfriendslist.html", "popup", "width=100%,height=100%,location=0,directory=0,status=0,menubar=0,scrollbars=1");
+	
+		popup.focus();		    
+	}	
+	
+	function setAnimationPreview()
+	{	
+		var caminho;
+	
+		caminho = document.getElementById("swfurl").value;		
+		
+		document.getElementById("previewanimacao").innerHTML=
+		"<object classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0' width='100%' height='100%'>"+
+		"<param name='movie' value="+caminho+"/>"+
+		"<param name='quality' value='high' />"+
+		"<param name='scale' value='noborder'>"+
+		"<param name='wmode' value='transparent'>"+
+		"<embed src="+caminho+" quality='high' wmode='transparent' type='application/x-shockwave-flash' width='100%' height='100%' SCALE='exactfit' pluginspage='http://www.macromedia.com/go/getflashplayer' />"+
+		"</object>";
+	}	
+
+</script>
+</head>
+<div id="fb-login-button-div" style="display:none; height:48px; line-height:100%">
+<center>
+<body>
+<br>&nbsp;Por favor entre no Facebook para poder fazer uso dessa Aplica&ccedil;&atilde;o:
+<a href="#" class="fbtab" style="margin:9.25%" onclick="javascript:facebookLogin();">Entrar no Facebook</a>
+</center>
+</div>
+<div id="voltar" style="height:40px; margin-top:0px; padding-top:17px;"><a href="#" style="margin:5px;" class="fbtab" onclick="javascript:window.close();">Voltar</a>
+</div>
+<div id="contentswf" style="background-color:#3b5998; position:relative; top:-10px; left:0px; width:100%; height:100%;"> 
+<div id="animacao" style="white-space:nowrap; position:relative; left:5px; width:100%; height:70px; line-height:45%; font-size:120%; color:white; text-align:left; background-color:#3b5998"><br><br>Entre com o endere&ccedil;o URL da sua anima&ccedil;&atilde;o em flash, m&uacute;sica ou imagem:
+<textarea id="swfurl" onchange="javascript:setAnimationPreview();" style="position:absolute; top: 55%; left:0px; background-color:#ffffff" wrap="soft">
+</textarea>
+</div>
+</div>
+</div>
+<div id="contentimg" style="background-color:#3b5998; position:relative; top:-10px; left:0px; width:100%; height:100%;"> 
+<div id="imagem" style="position:relative; left:5px; width:100%; height:60px; line-height:35%; font-size:120%; color:white; text-align:left; background-color:#3b5998"><br>Entre com o endere&ccedil;o URL de uma imagem para representar a sua anima&ccedil;&atilde;o:
+<center>
+<textarea id="imgurl" onchange="javascript:setAnimationPreview();" style="position:absolute; top: 45%; left:0px; background-color:#ffffff" wrap="soft">
+</textarea>
+</center>
+</div>
+</div>
+<br>
+<br>
+<center>
+<a href="#" class="fbtab" onclick="javascript:postToWallUsingFBUiAndAttachment();">&nbsp;&nbsp;Postar a anima&ccedil;&atilde;o em seu Mural&nbsp;&nbsp;</a>
+<a href="#" class="fbtab" onclick="javascript:openfriendslist();">Selecionar um Amigo para postar</a>
+</center>
+<center>
+<br>
+<br>
+<br>
+<div class="fbinfobox" id="previewanimacao" style="height:200px; top:0px; width:50%;">
+Pr&eacute;-visualiza&ccedil;&atilde;o
+</div>
+<br>
+</center>
+<br>
+<div class="fbinfobox" id="previewamigo" style="height:100%; top:0px; margin:0px; width:99%;">
+Postar para o Mural de: Nenhum Amigo selecionado&nbsp;
+</div>
+<br>
+<br>
+<br>
+<center>
+<div id="fb-logout-button-div">	
+	<a href="#" class="fbtab" onclick="javascript:sendAttachment();">Postar para o amigo selecionado</a>  
+	<a href="#" class="fbtab" onclick="javascript:window.close();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sair do Aplicativo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>  
+</div>
+</div>
+</center>
+<br>
+<br>
+<textarea id="friendid" style="margin:5px; visibility: hidden; cursor: default; background-color:#ffffff" wrap="soft">
+</textarea>
+</body>
+</html>
